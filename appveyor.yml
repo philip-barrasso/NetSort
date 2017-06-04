@@ -7,9 +7,6 @@ build_script:
 - cmd: >-
     cd src
     dotnet restore
-    # dotnet test NetSort.UnitTests\Netsort.UnitTests.csproj
-    # dotnet build -c release
-    # dotnet pack NetSort\NetSort.csproj -o ..\
 test: off
 artifacts:
 - path: src/NetSort.*.nupkg
