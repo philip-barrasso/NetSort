@@ -6,6 +6,7 @@ init:
 build_script:
 - cmd: >-
     cd src
+    dotnet restore
 test: off
 artifacts:
 - path: src/NetSort.*.nupkg
