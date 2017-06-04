@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>    
+    <Authors>Philip Barrasso</Authors>
+    <PackageId>NetSort</PackageId>
+    <PackageVersion>0.0.1-alpha</PackageVersion>
+    <Description>This library is used to sort collections of objects by using 'keys' on properties. It was created to solve a pain point in sorting via web api endpoints</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Initial alpha release</PackageReleaseNotes>
+    <PackageTags>sort webapi nuget</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
