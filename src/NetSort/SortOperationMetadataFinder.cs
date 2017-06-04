@@ -6,7 +6,7 @@ namespace NetSort
 {
     internal class SortOperationMetadataFinder
     {
-        public static SortOperationMetadata Find<T>(string key, SortDirection? overrideDirection = null)
+        public static SortOperationMetadata Find<T>(string key, SortDirection? overrideDirection = null) where T : class
 		{
 			IEnumerable<PropertyInfo> props = typeof(T).GetRuntimeProperties();
 			foreach (var prop in props)

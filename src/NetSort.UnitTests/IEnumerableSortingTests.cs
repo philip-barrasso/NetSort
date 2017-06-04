@@ -20,6 +20,25 @@ namespace NetSort.UnitTests
         }
 
 		[Theory]
+		[ClassData(typeof(SortByDateTimeTestDataGenerator))]
+		public void DoesSortByDateTimeWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput,
+										   SortDirection? direction, Func<Person, DateTime> equalitySelector)
+		{
+			IEnumerable<Person> sortedPeople;
+			if (direction != null)
+			{
+				sortedPeople = people.SortByKey(sortKey, direction.Value);
+			}
+			else
+			{
+				sortedPeople = people.SortByKey(sortKey);
+			}
+
+			bool isCorrect = DoesMatch(sortedPeople.ToList(), expectedOutput, equalitySelector);
+            Assert.True(isCorrect);			
+		}
+
+		[Theory]
 		[ClassData(typeof(SortByStringTestDataGenerator))]
         public void DoesSortByStringWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput, 
                                          Func<Person, string> equalitySelector)
@@ -43,8 +62,8 @@ namespace NetSort.UnitTests
 
         [Theory]
         [ClassData(typeof(SortByIntDescendingTestDataGenerator))]
-        public void DoesSortWithOverrideDirectionWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput, 
-                                                      Func<Person, int> equalitySelector)
+        public void DoesSortWithOverrideDirectionWork(IEnumerable<Person> people, string sortKey, 
+													  IList<Person> expectedOutput, Func<Person, int> equalitySelector)
         {
             var sortedPeople = people.SortByKey(sortKey, SortDirection.Desc).ToList();
 			bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
@@ -149,6 +168,59 @@ namespace NetSort.UnitTests
 						new Person() { Age = 5 },
 					},
                     new Func<Person, int>(p => p.Age)
+                },
+            };
+
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+        }
+
+		public class SortByDateTimeTestDataGenerator : IEnumerable<object[]>
+		{
+            private List<object[]> _data = new List<object[]>()
+            {
+                new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { DateJoined = DateTime.Now.AddDays(-5).Date },
+                        new Person() { DateJoined = DateTime.Now.AddDays(-2).Date },
+                        new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
+                    },
+                    "joinDate",
+					new List<Person>()
+					{
+						new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
+						new Person() { DateJoined = DateTime.Now.AddDays(-5).Date },
+						new Person() { DateJoined = DateTime.Now.AddDays(-2).Date },
+					},
+					SortDirection.Asc,
+                    new Func<Person, DateTime>(p => p.DateJoined)
+                },
+				new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { DateJoined = DateTime.Now.AddDays(-5).Date },
+                        new Person() { DateJoined = DateTime.Now.AddDays(-2).Date },
+                        new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
+                    },
+                    "joinDate",
+					new List<Person>()
+					{
+						new Person() { DateJoined = DateTime.Now.AddDays(-2).Date },
+						new Person() { DateJoined = DateTime.Now.AddDays(-5).Date },
+						new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
+					},
+					null,
+                    new Func<Person, DateTime>(p => p.DateJoined)
                 },
             };
 

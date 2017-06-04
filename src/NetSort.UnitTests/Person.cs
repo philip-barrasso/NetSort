@@ -17,5 +17,8 @@ namespace NetSort.UnitTests
 
         [Sortable("complexAddress")]
         public Address Address { get; set; }
+
+        [Sortable("joinDate", SortDirection.Desc)]
+        public DateTime DateJoined { get; set; }
     }
 }
