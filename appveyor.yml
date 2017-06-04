@@ -5,7 +5,7 @@ init:
 - ps: Update-AppveyorBuild -Version "$env:APPVEYOR_REPO_BRANCH.$(Get-Date -format yyyy.MM.dd.ss)"
 build_script:
 - cmd: >-
-    cd src
+    cd src 
     dotnet restore
 test: off
 artifacts:
