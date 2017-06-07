@@ -35,7 +35,7 @@ public class PeopleController : Controller
     {
         if (_sortKeyValidator.IsKeyValid<Person>(sortBy) == false)
         {
-            return BadRequest($"{sortBy} is not a valid key to sort people by.");
+            return BadRequest($"{sortBy} is not a valid key for sorting people");
         }
 
         var people = new List<Person>()
