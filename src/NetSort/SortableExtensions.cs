@@ -30,7 +30,7 @@ namespace NetSort
         /// <typeparam name="T">The type of data making up the data to sort</typeparam>
         /// <param name="items">The data to sort</param>
         /// <param name="key">The 'key' to sort by. This key must be present as the 'SortKey' of exactly one 'SortableAttribute' on a property of type T</param>
-        /// <param name="direction">The direction to sort (Ascending | Descending)</param>
+        /// <param name="direction">The direction to sort (Asc | Desc)</param>
         public static IEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, SortDirection direction)
             where T : class
         {
@@ -42,6 +42,31 @@ namespace NetSort
 			}
 
             return Sort(items, metadata);
+        }
+
+        /// <summary>
+        /// Returns a sorted enumerable per the 'key' passed in and in the order passed in.
+        /// </summary>
+        /// <typeparam name="T">The type of data making up the data to sort</typeparam>
+        /// <param name="items">The data to sort</param>
+        /// <param name="key">The 'key' to sort by. This key must be present as the 'SortKey' of exactly one 'SortableAttribute' on a property of type T</param>
+        /// <param name="direction">The direction to sort (Asc | Desc)</param>
+        public static IEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, string direction) where T : class
+        {
+            SortDirection directionEnum = ParseDirection(direction);
+            return items.SortByKey<T>(key, directionEnum);
+        }
+
+        private static SortDirection ParseDirection(string val)
+        {
+            SortDirection parsedDirection;
+            bool wasParseSuccessful = Enum.TryParse(val, true, out parsedDirection);
+            if (wasParseSuccessful == true)
+            {
+                return parsedDirection;
+            }
+
+            throw new ArgumentException($"{val} is not a valid 'SortDirection'");
         }
 
         private static IEnumerable<T> Sort<T>(IEnumerable<T> items, SortOperationMetadata metadata)
