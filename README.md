@@ -30,7 +30,7 @@ public class PeopleController : Controller
     }
 
     [HttpGet]
-    [Route("api/v1/people")]
+    [Route("")]
     public async Task<IActionResult> GetPeople([FromQuery]string sortBy)
     {
         if (_sortKeyValidator.IsKeyValid<Person>(sortBy) == false)
