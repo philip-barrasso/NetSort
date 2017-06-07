@@ -6,7 +6,7 @@
 
 ## Sort the response of an HTTP GET for people by their age
 
-'Person' object
+'Person'
 ```
 public class Person
 {
