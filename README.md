@@ -51,6 +51,9 @@ public class PeopleController : Controller
 }
 ```
 
+200 Request ==> http://BASE_URL/api/v1/people?sortBy=age
+400 Request ==> http://BASE_URL/api/v1/people?sortBy=age3
+
 # Installation
 
 Nuget:
