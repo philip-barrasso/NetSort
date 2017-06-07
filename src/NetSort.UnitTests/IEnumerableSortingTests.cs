@@ -8,6 +8,17 @@ namespace NetSort.UnitTests
 {
     public class IEnumerableSortingTests
     {
+		[Theory]
+		[ClassData(typeof(SortWithStringDirectionTestDataGenerator))]
+		public void DoesSortWithStringDirectionWork(IEnumerable<Person> people, string sortKey, string direction,
+													IList<Person> expectedOutput, Func<Person, int> equalitySelector)
+		{
+			var sortedPeople = people.SortByKey(sortKey, direction).ToList();
+            bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
+
+            Assert.True(isCorrect);
+		}
+
         [Theory]
         [ClassData(typeof(SortByIntTestDataGenerator))]
         public void DoesSortByIntWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput, 
@@ -161,6 +172,95 @@ namespace NetSort.UnitTests
                         new Person() { Age = 2 },
                     },
                     "age",
+					new List<Person>()
+					{
+						new Person() { Age = 2 },
+						new Person() { Age = 3 },
+						new Person() { Age = 5 },
+					},
+                    new Func<Person, int>(p => p.Age)
+                },
+            };
+
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+        }
+
+		public class SortWithStringDirectionTestDataGenerator : IEnumerable<object[]>
+		{
+            private List<object[]> _data = new List<object[]>()
+            {
+                new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { Age = 5 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 2 },
+                    },
+                    "age",
+					"Asc",
+					new List<Person>()
+					{
+						new Person() { Age = 2 },
+						new Person() { Age = 3 },
+						new Person() { Age = 5 },
+					},
+                    new Func<Person, int>(p => p.Age)
+                },
+				new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { Age = 5 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 2 },
+                    },
+                    "age",
+					"Desc",
+					new List<Person>()
+					{
+						new Person() { Age = 5 },
+						new Person() { Age = 3 },
+						new Person() { Age = 2 },
+					},
+                    new Func<Person, int>(p => p.Age)
+                },
+				new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { Age = 5 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 2 },
+                    },
+                    "age",
+					"desc",
+					new List<Person>()
+					{
+						new Person() { Age = 5 },
+						new Person() { Age = 3 },
+						new Person() { Age = 2 },
+					},
+                    new Func<Person, int>(p => p.Age)
+                },
+				new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { Age = 5 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 2 },
+                    },
+                    "age",
+					"Asc",
 					new List<Person>()
 					{
 						new Person() { Age = 2 },
