@@ -111,6 +111,12 @@ namespace NetSort.UnitTests
             Assert.Throws<ArgumentException>(() => new List<Person>().SortByKey("something that doesn't exist"));
         }
 
+		[Fact]
+        public void DoesSortWithBadDirectionThrowException()
+        {
+            Assert.Throws<ArgumentException>(() => new List<Person>().SortByKey("age", "some direction"));
+        }
+
         private bool DoesMatch<T, TEQuality>(IList<T> data1, IList<T> data2, Func<T, TEQuality> equalitySelector)
         {
             if (data1.Count != data2.Count) return false;
@@ -224,7 +230,7 @@ namespace NetSort.UnitTests
                         new Person() { Age = 2 },
                     },
                     "age",
-					"Desc",
+					"deSc",
 					new List<Person>()
 					{
 						new Person() { Age = 5 },
@@ -260,7 +266,7 @@ namespace NetSort.UnitTests
                         new Person() { Age = 2 },
                     },
                     "age",
-					"Asc",
+					"ASC",
 					new List<Person>()
 					{
 						new Person() { Age = 2 },
