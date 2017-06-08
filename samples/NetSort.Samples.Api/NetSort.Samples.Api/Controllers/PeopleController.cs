@@ -19,7 +19,7 @@ namespace NetSort.Samples.Api.Controllers
 
 		[HttpGet]
 		[Route("")]
-        public async Task<IActionResult> GetPeople([FromQuery]string sortBy)
+        public async Task<IActionResult> GetPeople([FromQuery]string sortBy, [FromQuery]string sortDir = null)
 		{
             if (_sortKeyValidator.IsKeyValid<Person>(sortBy) == false)
 			{
@@ -33,8 +33,12 @@ namespace NetSort.Samples.Api.Controllers
 				new Person() { Age = 11, Name = "Sally" },
 			};
 
-			var sortedPeople = people.SortByKey(sortBy);
-			return Ok(sortedPeople);
+			if (sortDir != null)
+			{
+				return Ok(people.SortByKey(sortBy, sortDir));
+			}
+
+			return Ok(people.SortByKey(sortBy));
 		}
 	}
 }
