@@ -12,7 +12,7 @@ namespace NetSort
         public string SortKey { get; private set; }
 
         /// <summary>
-        /// A default sort direction can optionally be set for this property
+        /// A default sort direction that can optionally be set for this property
         /// </summary>
         public SortDirection? DefaultSortDirection { get; private set; }
 
