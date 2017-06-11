@@ -79,17 +79,14 @@ namespace NetSort
             return items.OrderByDescending(i => GetNestedValue(metadata, i));
         }
 
-        private static object GetNestedValue<T>(IEnumerable<SortOperationMetadata> metadatas, T rootObj)
-        {
-            Type curType = typeof(T);
-            object retVal = rootObj;
-
+        private static object GetNestedValue(IEnumerable<SortOperationMetadata> metadatas, object rootObj)
+        {         
             foreach (var metadata in metadatas)
             {
-                 retVal = metadata.ToSortBy.GetValue(retVal);
+                 rootObj = metadata.ToSortBy.GetValue(rootObj);
             }
 
-            return retVal;
+            return rootObj;
         }
     }
 }
