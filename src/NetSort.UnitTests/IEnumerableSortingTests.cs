@@ -19,6 +19,17 @@ namespace NetSort.UnitTests
             Assert.True(isCorrect);
 		}
 
+		[Theory]
+		[ClassData(typeof(SortByNestedPropertyTestDataGenerator))]
+		public void DoesSortWithNestedPropertyWork(IEnumerable<Person> people, string sortKey,
+													IList<Person> expectedOutput, Func<Person, string> equalitySelector)
+		{
+			var sortedPeople = people.SortByKey(sortKey).ToList();
+            bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
+
+            Assert.True(isCorrect);
+		}
+
         [Theory]
         [ClassData(typeof(SortByIntTestDataGenerator))]
         public void DoesSortByIntWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput, 
@@ -361,6 +372,58 @@ namespace NetSort.UnitTests
 						new Person() { Age = 2 },
 					},
 					new Func<Person, int>(p => p.Age)
+				},
+			};
+
+			IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
+			{
+				return _data.GetEnumerator();
+			}
+
+			IEnumerator IEnumerable.GetEnumerator()
+			{
+				return _data.GetEnumerator();
+			}
+		}
+
+		public class SortByNestedPropertyTestDataGenerator : IEnumerable<object[]>
+		{
+			private List<object[]> _data = new List<object[]>()
+            {
+				new object[]
+				{
+					new List<Person>()
+					{
+						new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
+						new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
+						new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
+					},
+					"complexAddress.zip",
+					new List<Person>()
+					{
+						new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
+						new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
+						new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
+					},
+					new Func<Person, string>(p => p.Address.Zip)
+				},
+
+				new object[]
+				{
+					new List<Person>()
+					{
+						new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
+						new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
+						new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
+					},
+					"complexAddress.state",
+					new List<Person>()
+					{											
+						new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
+						new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
+						new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
+					},
+					new Func<Person, string>(p => p.Address.State)
 				},
 			};
 
