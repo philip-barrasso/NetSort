@@ -28,9 +28,54 @@ namespace NetSort.Samples.Api.Controllers
 
             var people = new List<Person>()
 			{
-				new Person() { Age = 15, Name = "Bob" },
-				new Person() { Age = 8, Name = "Steve" },
-				new Person() { Age = 11, Name = "Sally" },
+				new Person() 
+                { 
+                    Age = 15, 
+                    Name = "Bob", 
+                    House = new House() 
+                    { 
+                        ListPrice = 15, 
+                        Address = new Address()
+                        {
+                            City = "Atlanta",
+                            State = "GA",
+                            Zip = "30308",
+                            Street = "Peachtree",
+                        }
+                    } 
+                },
+                new Person() 
+                { 
+                    Age = 8, 
+                    Name = "Steve", 
+                    House = new House() 
+                    { 
+                        ListPrice = 18, 
+                        Address = new Address()
+                        {
+                            City = "Kansas City",
+                            State = "KS",
+                            Zip = "12388",
+                            Street = "Main",
+                        }
+                    } 
+                },
+                new Person() 
+                { 
+                    Age = 11, 
+                    Name = "Sally", 
+                    House = new House() 
+                    { 
+                        ListPrice = 5, 
+                        Address = new Address()
+                        {
+                            City = "Memphis",
+                            State = "TN",
+                            Zip = "31214",
+                            Street = "Beale",
+                        }
+                    } 
+                },
 			};
 
 			if (sortDir != null)

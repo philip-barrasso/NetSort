@@ -1,4 +1,5 @@
 using NetSort;
+using System;
 
 namespace NetSort.Samples.Api.Models
 {
@@ -10,6 +11,7 @@ namespace NetSort.Samples.Api.Models
         [Sortable("city")]
         public string City { get; set; }
 
+        [Sortable("street")]
         public string Street { get; set; }
 
         [Sortable("zip", SortDirection.Desc)]
