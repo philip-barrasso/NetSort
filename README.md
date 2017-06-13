@@ -63,5 +63,5 @@ public class PeopleController : Controller
 Nuget:
 
 ```
-PM> Install-Package NetSort -Pre
+PM> Install-Package NetSort
 ```
