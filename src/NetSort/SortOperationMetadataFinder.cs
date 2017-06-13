@@ -6,20 +6,38 @@ namespace NetSort
 {
     internal class SortOperationMetadataFinder
     {
-        public static SortOperationMetadata Find<T>(string key, SortDirection? overrideDirection = null) where T : class
+        public static IEnumerable<SortOperationMetadata> Find<T>(string key, SortDirection? overrideDirection = null) where T : class
 		{
-			IEnumerable<PropertyInfo> props = typeof(T).GetRuntimeProperties();
-			foreach (var prop in props)
+			var metadata = new List<SortOperationMetadata>();
+			string[] keyHierarchy = key.Split('.');
+			Type curType = typeof(T);
+
+			for (int index = 0; index < keyHierarchy.Length; index++)
 			{
-				var sortAttribute = prop.GetCustomAttribute<SortableAttribute>();
-                if (sortAttribute != null && sortAttribute.SortKey == key && IsIComparable(prop) == true)
+				IEnumerable<PropertyInfo> props = curType.GetRuntimeProperties();
+				foreach (var prop in props)
 				{
-					SortDirection direction = GetDirection(sortAttribute, overrideDirection);
-					return new SortOperationMetadata(prop, direction);
+					if (IsSortableProperty(keyHierarchy[index], prop, index == keyHierarchy.Length - 1))
+					{
+						var sortAttribute = prop.GetCustomAttribute<SortableAttribute>();
+						SortDirection direction = GetDirection(sortAttribute, overrideDirection);
+						metadata.Add(new SortOperationMetadata(prop, direction));
+						
+						curType = prop.PropertyType;
+						break;
+					}
 				}
 			}
 
-			return null;
+			return metadata;
+		}
+
+		private static bool IsSortableProperty(string key, PropertyInfo prop, bool isLeafProperty)
+		{
+			var sortAttribute = prop.GetCustomAttribute<SortableAttribute>();
+			return sortAttribute != null && 
+				   sortAttribute.SortKey == key && 
+				   (isLeafProperty == false || IsIComparable(prop) == true);
 		}
 
         private static bool IsIComparable(PropertyInfo prop)

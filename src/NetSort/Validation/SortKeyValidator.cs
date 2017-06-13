@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace NetSort.Validation
 {
     public class SortKeyValidator : ISortKeyValidator
@@ -10,8 +13,8 @@ namespace NetSort.Validation
         /// <param name="key">The 'SortKey' value of the 'SortableAttribute'<param>
         public bool IsKeyValid<T>(string key) where T : class
         {
-            SortOperationMetadata metadata = SortOperationMetadataFinder.Find<T>(key);
-            return metadata != null;
+            IEnumerable<SortOperationMetadata> metadatas = SortOperationMetadataFinder.Find<T>(key);
+            return metadatas.Any() == true;
         }
     }
 }

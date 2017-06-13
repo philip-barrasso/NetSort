@@ -14,8 +14,8 @@ namespace NetSort
         /// <param name="key">The 'key' to sort by. This key must be present as the 'SortKey' of exactly one 'SortableAttribute' on a property of type T</param>
         public static IEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key) where T : class
         {
-            SortOperationMetadata metadata = SortOperationMetadataFinder.Find<T>(key);
-			if (metadata == null)
+            IEnumerable<SortOperationMetadata> metadata = SortOperationMetadataFinder.Find<T>(key);
+			if (metadata.Any() == false)
 			{
 				string error = $"A 'sortable attribute' could not be found.\n Key: {key} \nType: {typeof(T).Name}.";
 				throw new ArgumentException(error);
@@ -34,8 +34,8 @@ namespace NetSort
         public static IEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, SortDirection direction)
             where T : class
         {
-            SortOperationMetadata metadata = SortOperationMetadataFinder.Find<T>(key, direction);
-			if (metadata == null)
+            IEnumerable<SortOperationMetadata> metadata = SortOperationMetadataFinder.Find<T>(key, direction);
+			if (metadata.Any() == false)
 			{
 				string error = $"A 'sortable attribute' could not be found.\n Key: {key} \nType: {typeof(T).Name}.";
 				throw new ArgumentException(error);
@@ -69,14 +69,24 @@ namespace NetSort
             throw new ArgumentException($"{val} is not a valid 'SortDirection'");
         }
 
-        private static IEnumerable<T> Sort<T>(IEnumerable<T> items, SortOperationMetadata metadata)
+        private static IEnumerable<T> Sort<T>(IEnumerable<T> items, IEnumerable<SortOperationMetadata> metadata)
         {
-            if (metadata.Direction == SortDirection.Asc)
+            if (metadata.Last().Direction == SortDirection.Asc)
             {
-                return items.OrderBy(i => metadata.ToSortBy.GetValue(i));
+                return items.OrderBy(i => GetNestedValue(metadata, i));
             }
 
-            return items.OrderByDescending(i => metadata.ToSortBy.GetValue(i));
+            return items.OrderByDescending(i => GetNestedValue(metadata, i));
+        }
+
+        private static object GetNestedValue(IEnumerable<SortOperationMetadata> metadatas, object rootObj)
+        {         
+            foreach (var metadata in metadatas)
+            {
+                 rootObj = metadata.ToSortBy.GetValue(rootObj);
+            }
+
+            return rootObj;
         }
     }
 }

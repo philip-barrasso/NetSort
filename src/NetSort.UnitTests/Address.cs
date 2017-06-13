@@ -8,8 +8,10 @@ namespace NetSort.UnitTests
 
         public string City { get; set; }
 
+        [Sortable("state")]
         public string State { get; set; }
 
+        [Sortable("zip", SortDirection.Desc)]
         public string Zip { get; set; }
 
         public string FullAddress
