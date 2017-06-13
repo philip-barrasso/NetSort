@@ -4,7 +4,7 @@
     <TargetFramework>netstandard1.4</TargetFramework>    
     <Authors>Philip Barrasso</Authors>
     <PackageId>NetSort</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Description>This library's purpose is to sort objects by using 'keys' on properties. It was created to solve a pain point in sorting via web api endpoints</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>Initial release</PackageReleaseNotes>

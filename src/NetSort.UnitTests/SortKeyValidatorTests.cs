@@ -25,6 +25,9 @@ namespace NetSort.UnitTests
 				new object[] { "some key that does not exist", false },
                 new object[] { "age", true },
                 new object[] { "complexAddress", true },
+                new object[] { "nonSortAddress", false },
+                new object[] { "nonSortAddress.zip", true },
+                new object[] { "nonSortAddress.metadata", false }
 			};
 
 			IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
