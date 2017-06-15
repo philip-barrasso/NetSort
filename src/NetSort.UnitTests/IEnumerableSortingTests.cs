@@ -1,39 +1,28 @@
-using System;
-using Xunit;
-using System.Collections.Generic;
-using System.Linq;
-using System.Collections;
+    using System;
+    using Xunit;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Collections;
 
-namespace NetSort.UnitTests
-{
+    namespace NetSort.UnitTests
+    {
     public class IEnumerableSortingTests
     {
-		[Theory]
-		[ClassData(typeof(SortWithStringDirectionTestDataGenerator))]
-		public void DoesSortWithStringDirectionWork(IEnumerable<Person> people, string sortKey, string direction,
-													IList<Person> expectedOutput, Func<Person, int> equalitySelector)
-		{
-			var sortedPeople = people.SortByKey(sortKey, direction).ToList();
+        [Theory]
+        [ClassData(typeof(SortWithStringDirectionTestDataGenerator))]
+        public void DoesSortWithStringDirectionWork(IEnumerable<Person> people, string sortKey, string direction,
+                                                    IList<Person> expectedOutput, Func<Person, int> equalitySelector)
+        {
+            var sortedPeople = people.SortByKey(sortKey, direction).ToList();
             bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
 
             Assert.True(isCorrect);
-		}
-
-		[Theory]
-		[ClassData(typeof(SortByNestedPropertyTestDataGenerator))]
-		public void DoesSortWithNestedPropertyWork(IEnumerable<Person> people, string sortKey,
-													IList<Person> expectedOutput, Func<Person, string> equalitySelector)
-		{
-			var sortedPeople = people.SortByKey(sortKey).ToList();
-            bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
-
-            Assert.True(isCorrect);
-		}
+        }
 
         [Theory]
-        [ClassData(typeof(SortByIntTestDataGenerator))]
-        public void DoesSortByIntWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput, 
-                                      Func<Person, int> equalitySelector)
+        [ClassData(typeof(SortByNestedPropertyTestDataGenerator))]
+        public void DoesSortWithNestedPropertyWork(IEnumerable<Person> people, string sortKey,
+                                                    IList<Person> expectedOutput, Func<Person, string> equalitySelector)
         {
             var sortedPeople = people.SortByKey(sortKey).ToList();
             bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
@@ -41,56 +30,67 @@ namespace NetSort.UnitTests
             Assert.True(isCorrect);
         }
 
-		[Theory]
-		[ClassData(typeof(SortByDateTimeTestDataGenerator))]
-		public void DoesSortByDateTimeWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput,
-										   SortDirection? direction, Func<Person, DateTime> equalitySelector)
-		{
-			IEnumerable<Person> sortedPeople;
-			if (direction != null)
-			{
-				sortedPeople = people.SortByKey(sortKey, direction.Value);
-			}
-			else
-			{
-				sortedPeople = people.SortByKey(sortKey);
-			}
+        [Theory]
+        [ClassData(typeof(SortByIntTestDataGenerator))]
+        public void DoesSortByIntWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput, 
+                                        Func<Person, int> equalitySelector)
+        {
+            var sortedPeople = people.SortByKey(sortKey).ToList();
+            bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
 
-			bool isCorrect = DoesMatch(sortedPeople.ToList(), expectedOutput, equalitySelector);
+            Assert.True(isCorrect);
+        }
+
+        [Theory]
+        [ClassData(typeof(SortByDateTimeTestDataGenerator))]
+        public void DoesSortByDateTimeWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput,
+                                            SortDirection? direction, Func<Person, DateTime> equalitySelector)
+        {
+            IEnumerable<Person> sortedPeople;
+            if (direction != null)
+            {
+                sortedPeople = people.SortByKey(sortKey, direction.Value);
+            }
+            else
+            {
+                sortedPeople = people.SortByKey(sortKey);
+            }
+
+            bool isCorrect = DoesMatch(sortedPeople.ToList(), expectedOutput, equalitySelector);
             Assert.True(isCorrect);			
-		}
+        }
 
-		[Theory]
-		[ClassData(typeof(SortByStringTestDataGenerator))]
+        [Theory]
+        [ClassData(typeof(SortByStringTestDataGenerator))]
         public void DoesSortByStringWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput, 
-                                         Func<Person, string> equalitySelector)
-		{
-			var sortedPeople = people.SortByKey(sortKey).ToList();
-			bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
+                                            Func<Person, string> equalitySelector)
+        {
+            var sortedPeople = people.SortByKey(sortKey).ToList();
+            bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
 
-			Assert.True(isCorrect);
-		}
+            Assert.True(isCorrect);
+        }
 
-		[Theory]
+        [Theory]
         [ClassData(typeof(SortByDecimalTestDataGenerator))]
         public void DoesSortByDecimalWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput, 
-                                          Func<Person, decimal> equalitySelector)
-		{
-			var sortedPeople = people.SortByKey(sortKey).ToList();
-			bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
+                                            Func<Person, decimal> equalitySelector)
+        {
+            var sortedPeople = people.SortByKey(sortKey).ToList();
+            bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
 
-			Assert.True(isCorrect);
-		}
+            Assert.True(isCorrect);
+        }
 
         [Theory]
         [ClassData(typeof(SortByIntDescendingTestDataGenerator))]
         public void DoesSortWithOverrideDirectionWork(IEnumerable<Person> people, string sortKey, 
-													  IList<Person> expectedOutput, Func<Person, int> equalitySelector)
+                                                        IList<Person> expectedOutput, Func<Person, int> equalitySelector)
         {
             var sortedPeople = people.SortByKey(sortKey, SortDirection.Desc).ToList();
-			bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
+            bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
 
-			Assert.True(isCorrect);
+            Assert.True(isCorrect);
         }
 
         [Theory]
@@ -99,22 +99,22 @@ namespace NetSort.UnitTests
                                                                 IList<Person> expectedOutput, 
                                                                 Func<Person, string> equalitySelector)
         {
-			var sortedPeople = people.SortByKey(sortKey).ToList();
-			bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
+            var sortedPeople = people.SortByKey(sortKey).ToList();
+            bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
 
-			Assert.True(isCorrect);
+            Assert.True(isCorrect);
         }
 
-		[Theory]
-		[ClassData(typeof(SortByComplexObjectTestDataGenerator))]
-		public void DoesSortByComplexObjectWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput,
+        [Theory]
+        [ClassData(typeof(SortByComplexObjectTestDataGenerator))]
+        public void DoesSortByComplexObjectWork(IEnumerable<Person> people, string sortKey, IList<Person> expectedOutput,
                                                 Func<Person, Address> equalitySelector)
-		{
-			var sortedPeople = people.SortByKey(sortKey).ToList();
-			bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
+        {
+            var sortedPeople = people.SortByKey(sortKey).ToList();
+            bool isCorrect = DoesMatch(sortedPeople, expectedOutput, equalitySelector);
 
-			Assert.True(isCorrect);
-		}
+            Assert.True(isCorrect);
+        }
 
         [Fact]
         public void DoesSortWithBadKeyThrowException()
@@ -122,7 +122,7 @@ namespace NetSort.UnitTests
             Assert.Throws<ArgumentException>(() => new List<Person>().SortByKey("something that doesn't exist"));
         }
 
-		[Fact]
+        [Fact]
         public void DoesSortWithBadDirectionThrowException()
         {
             Assert.Throws<ArgumentException>(() => new List<Person>().SortByKey("age", "some direction"));
@@ -142,42 +142,42 @@ namespace NetSort.UnitTests
             return true;
         }
 
-		public class SortByComplexObjectTestDataGenerator : IEnumerable<object[]>
-		{
-			private List<object[]> _data = new List<object[]>()
-			{
-				new object[]
-				{
-					new List<Person>()
+        public class SortByComplexObjectTestDataGenerator : IEnumerable<object[]>
+        {
+            private List<object[]> _data = new List<object[]>()
+            {
+                new object[]
+                {
+                    new List<Person>()
                     {
                         new Person() { Address = new Address() { City = "Atlanta", State = "GA", Street = "123 Main" } },
                         new Person() { Address = new Address() { City = "Atlanta", State = "GA", Street = "122 Main" } },
                         new Person() { Address = new Address() { State = "GA" } },
-					},
-					"complexAddress",
-					new List<Person>()
-					{
+                    },
+                    "complexAddress",
+                    new List<Person>()
+                    {
                         new Person() { Address = new Address() { State = "GA" } },
                         new Person() { Address = new Address() { City = "Atlanta", State = "GA", Street = "122 Main" } },
-						new Person() { Address = new Address() { City = "Atlanta", State = "GA", Street = "123 Main" } },
-					},
+                        new Person() { Address = new Address() { City = "Atlanta", State = "GA", Street = "123 Main" } },
+                    },
                     new Func<Person, Address>(p => p.Address)
-				},
-			};
+                },
+            };
 
-			IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
 
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
-		}
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+        }
 
-		public class SortByIntTestDataGenerator : IEnumerable<object[]>
-		{
+        public class SortByIntTestDataGenerator : IEnumerable<object[]>
+        {
             private List<object[]> _data = new List<object[]>()
             {
                 new object[]
@@ -189,12 +189,12 @@ namespace NetSort.UnitTests
                         new Person() { Age = 2 },
                     },
                     "age",
-					new List<Person>()
-					{
-						new Person() { Age = 2 },
-						new Person() { Age = 3 },
-						new Person() { Age = 5 },
-					},
+                    new List<Person>()
+                    {
+                        new Person() { Age = 2 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 5 },
+                    },
                     new Func<Person, int>(p => p.Age)
                 },
             };
@@ -210,8 +210,8 @@ namespace NetSort.UnitTests
             }
         }
 
-		public class SortWithStringDirectionTestDataGenerator : IEnumerable<object[]>
-		{
+        public class SortWithStringDirectionTestDataGenerator : IEnumerable<object[]>
+        {
             private List<object[]> _data = new List<object[]>()
             {
                 new object[]
@@ -223,16 +223,16 @@ namespace NetSort.UnitTests
                         new Person() { Age = 2 },
                     },
                     "age",
-					"Asc",
-					new List<Person>()
-					{
-						new Person() { Age = 2 },
-						new Person() { Age = 3 },
-						new Person() { Age = 5 },
-					},
+                    "Asc",
+                    new List<Person>()
+                    {
+                        new Person() { Age = 2 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 5 },
+                    },
                     new Func<Person, int>(p => p.Age)
                 },
-				new object[]
+                new object[]
                 {
                     new List<Person>()
                     {
@@ -241,16 +241,16 @@ namespace NetSort.UnitTests
                         new Person() { Age = 2 },
                     },
                     "age",
-					"deSc",
-					new List<Person>()
-					{
-						new Person() { Age = 5 },
-						new Person() { Age = 3 },
-						new Person() { Age = 2 },
-					},
+                    "deSc",
+                    new List<Person>()
+                    {
+                        new Person() { Age = 5 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 2 },
+                    },
                     new Func<Person, int>(p => p.Age)
                 },
-				new object[]
+                new object[]
                 {
                     new List<Person>()
                     {
@@ -259,16 +259,16 @@ namespace NetSort.UnitTests
                         new Person() { Age = 2 },
                     },
                     "age",
-					"desc",
-					new List<Person>()
-					{
-						new Person() { Age = 5 },
-						new Person() { Age = 3 },
-						new Person() { Age = 2 },
-					},
+                    "desc",
+                    new List<Person>()
+                    {
+                        new Person() { Age = 5 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 2 },
+                    },
                     new Func<Person, int>(p => p.Age)
                 },
-				new object[]
+                new object[]
                 {
                     new List<Person>()
                     {
@@ -277,13 +277,13 @@ namespace NetSort.UnitTests
                         new Person() { Age = 2 },
                     },
                     "age",
-					"ASC",
-					new List<Person>()
-					{
-						new Person() { Age = 2 },
-						new Person() { Age = 3 },
-						new Person() { Age = 5 },
-					},
+                    "ASC",
+                    new List<Person>()
+                    {
+                        new Person() { Age = 2 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 5 },
+                    },
                     new Func<Person, int>(p => p.Age)
                 },
             };
@@ -299,8 +299,8 @@ namespace NetSort.UnitTests
             }
         }
 
-		public class SortByDateTimeTestDataGenerator : IEnumerable<object[]>
-		{
+        public class SortByDateTimeTestDataGenerator : IEnumerable<object[]>
+        {
             private List<object[]> _data = new List<object[]>()
             {
                 new object[]
@@ -312,16 +312,16 @@ namespace NetSort.UnitTests
                         new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
                     },
                     "joinDate",
-					new List<Person>()
-					{
-						new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
-						new Person() { DateJoined = DateTime.Now.AddDays(-5).Date },
-						new Person() { DateJoined = DateTime.Now.AddDays(-2).Date },
-					},
-					SortDirection.Asc,
+                    new List<Person>()
+                    {
+                        new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
+                        new Person() { DateJoined = DateTime.Now.AddDays(-5).Date },
+                        new Person() { DateJoined = DateTime.Now.AddDays(-2).Date },
+                    },
+                    SortDirection.Asc,
                     new Func<Person, DateTime>(p => p.DateJoined)
                 },
-				new object[]
+                new object[]
                 {
                     new List<Person>()
                     {
@@ -330,13 +330,13 @@ namespace NetSort.UnitTests
                         new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
                     },
                     "joinDate",
-					new List<Person>()
-					{
-						new Person() { DateJoined = DateTime.Now.AddDays(-2).Date },
-						new Person() { DateJoined = DateTime.Now.AddDays(-5).Date },
-						new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
-					},
-					null,
+                    new List<Person>()
+                    {
+                        new Person() { DateJoined = DateTime.Now.AddDays(-2).Date },
+                        new Person() { DateJoined = DateTime.Now.AddDays(-5).Date },
+                        new Person() { DateJoined = DateTime.Now.AddDays(-10).Date },
+                    },
+                    null,
                     new Func<Person, DateTime>(p => p.DateJoined)
                 },
             };
@@ -352,192 +352,192 @@ namespace NetSort.UnitTests
             }
         }
 
-		public class SortByIntDescendingTestDataGenerator : IEnumerable<object[]>
-		{
-			private List<object[]> _data = new List<object[]>()
-			{
-				new object[]
-				{
-					new List<Person>()
-					{
-						new Person() { Age = 3 },
-						new Person() { Age = 5 },
-						new Person() { Age = 2 },
-					},
-					"age",
-					new List<Person>()
-					{
-						new Person() { Age = 5 },
-						new Person() { Age = 3 },
-						new Person() { Age = 2 },
-					},
-					new Func<Person, int>(p => p.Age)
-				},
-			};
-
-			IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
-
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
-		}
-
-		public class SortByNestedPropertyTestDataGenerator : IEnumerable<object[]>
-		{
-			private List<object[]> _data = new List<object[]>()
+        public class SortByIntDescendingTestDataGenerator : IEnumerable<object[]>
+        {
+            private List<object[]> _data = new List<object[]>()
             {
-				new object[]
-				{
-					new List<Person>()
-					{
-						new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
-						new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
-						new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
-					},
-					"complexAddress.zip",
-					new List<Person>()
-					{
-						new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
-						new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
-						new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
-					},
-					new Func<Person, string>(p => p.Address.Zip)
-				},
+                new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { Age = 3 },
+                        new Person() { Age = 5 },
+                        new Person() { Age = 2 },
+                    },
+                    "age",
+                    new List<Person>()
+                    {
+                        new Person() { Age = 5 },
+                        new Person() { Age = 3 },
+                        new Person() { Age = 2 },
+                    },
+                    new Func<Person, int>(p => p.Age)
+                },
+            };
 
-				new object[]
-				{
-					new List<Person>()
-					{
-						new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
-						new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
-						new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
-					},
-					"complexAddress.state",
-					new List<Person>()
-					{											
-						new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
-						new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
-						new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
-					},
-					new Func<Person, string>(p => p.Address.State)
-				},
-			};
-
-			IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
-
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
-		}
-
-		public class SortByStringTestDataGenerator : IEnumerable<object[]>
-		{
-			private List<object[]> _data = new List<object[]>()
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
             {
-				new object[]
-				{
-					new List<Person>()
-					{
-						new Person() { Name = "Bob" },
-						new Person() { Name = "Steve" },
-						new Person() { Name = "Andrew" },
-					},
-					"name",
-					new List<Person>()
-					{
-						new Person() { Name = "Andrew" },
-						new Person() { Name = "Bob" },
-						new Person() { Name = "Steve" },
-					},
-					new Func<Person, string>(p => p.Name)
-				},
-			};
+                return _data.GetEnumerator();
+            }
 
-			IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+        }
 
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
-		}
+        public class SortByNestedPropertyTestDataGenerator : IEnumerable<object[]>
+        {
+            private List<object[]> _data = new List<object[]>()
+            {
+                new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
+                        new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
+                        new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
+                    },
+                    "complexAddress.zip",
+                    new List<Person>()
+                    {
+                        new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
+                        new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
+                        new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
+                    },
+                    new Func<Person, string>(p => p.Address.Zip)
+                },
 
-		public class SortByStringDescendingTestDataGenerator : IEnumerable<object[]>
-		{
-			private List<object[]> _data = new List<object[]>()
-			{
-				new object[]
-				{
-					new List<Person>()
-					{
+                new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
+                        new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
+                        new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
+                    },
+                    "complexAddress.state",
+                    new List<Person>()
+                    {											
+                        new Person() { Address = new Address() { City = "Atl", State = "GA", Zip = "30308" } },
+                        new Person() { Address = new Address() { City = "Wich", State = "KS", Zip = "67202" } },
+                        new Person() { Address = new Address() { City = "Mem", State = "TN", Zip = "78211" } },
+                    },
+                    new Func<Person, string>(p => p.Address.State)
+                },
+            };
+
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+        }
+
+        public class SortByStringTestDataGenerator : IEnumerable<object[]>
+        {
+            private List<object[]> _data = new List<object[]>()
+            {
+                new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { Name = "Bob" },
+                        new Person() { Name = "Steve" },
+                        new Person() { Name = "Andrew" },
+                    },
+                    "name",
+                    new List<Person>()
+                    {
+                        new Person() { Name = "Andrew" },
+                        new Person() { Name = "Bob" },
+                        new Person() { Name = "Steve" },
+                    },
+                    new Func<Person, string>(p => p.Name)
+                },
+            };
+
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+        }
+
+        public class SortByStringDescendingTestDataGenerator : IEnumerable<object[]>
+        {
+            private List<object[]> _data = new List<object[]>()
+            {
+                new object[]
+                {
+                    new List<Person>()
+                    {
                         new Person() { NameWithDefaultDescending = "Bob" },
-						new Person() { NameWithDefaultDescending = "Steve" },
-						new Person() { NameWithDefaultDescending = "Andrew" },
-					},
-					"nameDesc",
-					new List<Person>()
-					{
-						new Person() { NameWithDefaultDescending = "Steve" },
-						new Person() { NameWithDefaultDescending = "Bob" },
-						new Person() { NameWithDefaultDescending = "Andrew" },
-					},
+                        new Person() { NameWithDefaultDescending = "Steve" },
+                        new Person() { NameWithDefaultDescending = "Andrew" },
+                    },
+                    "nameDesc",
+                    new List<Person>()
+                    {
+                        new Person() { NameWithDefaultDescending = "Steve" },
+                        new Person() { NameWithDefaultDescending = "Bob" },
+                        new Person() { NameWithDefaultDescending = "Andrew" },
+                    },
                     new Func<Person, string>(p => p.NameWithDefaultDescending)
-				},
-			};
+                },
+            };
 
-			IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
 
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
-		}
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+        }
 
-		public class SortByDecimalTestDataGenerator : IEnumerable<object[]>
-		{
-			private List<object[]> _data = new List<object[]>()
-			{
-				new object[]
-				{
-					new List<Person>()
-					{
-						new Person() { NetWorth = 123.55m },
-						new Person() { NetWorth = 123.54m },
-						new Person() { NetWorth = 121 },
-					},
-					"worth",
-					new List<Person>()
-					{
-						new Person() { NetWorth = 121 },
-						new Person() { NetWorth = 123.54m },
-						new Person() { NetWorth = 123.55m },
-					},
-					new Func<Person, decimal>(p => p.NetWorth),
-				}
-			};
+        public class SortByDecimalTestDataGenerator : IEnumerable<object[]>
+        {
+            private List<object[]> _data = new List<object[]>()
+            {
+                new object[]
+                {
+                    new List<Person>()
+                    {
+                        new Person() { NetWorth = 123.55m },
+                        new Person() { NetWorth = 123.54m },
+                        new Person() { NetWorth = 121 },
+                    },
+                    "worth",
+                    new List<Person>()
+                    {
+                        new Person() { NetWorth = 121 },
+                        new Person() { NetWorth = 123.54m },
+                        new Person() { NetWorth = 123.55m },
+                    },
+                    new Func<Person, decimal>(p => p.NetWorth),
+                }
+            };
 
-			IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
 
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
-		}
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+        }
     }
-}
+    }
