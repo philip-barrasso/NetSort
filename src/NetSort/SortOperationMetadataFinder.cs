@@ -6,10 +6,10 @@ namespace NetSort
 {
     internal class SortOperationMetadataFinder
     {
-        public static IEnumerable<SortOperationMetadata> Find<T>(string key, SortDirection? overrideDirection = null) where T : class
+        public static IEnumerable<SortOperationMetadata> Find<T>(string key, char delimiter, SortDirection? overrideDirection = null) where T : class
 		{
 			var metadata = new List<SortOperationMetadata>();
-			string[] keyHierarchy = key.Split('.');
+			string[] keyHierarchy = key.Split(delimiter);
 			Type curType = typeof(T);
 
 			for (int index = 0; index < keyHierarchy.Length; index++)

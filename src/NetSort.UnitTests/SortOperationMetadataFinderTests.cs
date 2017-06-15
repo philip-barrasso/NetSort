@@ -13,7 +13,7 @@ namespace NetSort.UnitTests
         [ClassData(typeof(FindMetadataTestDataGenerator))]
         public void SortOperationMetadataFinder_Find(string key, SortDirection? direction, IList<Tuple<string, SortDirection>> expectedOutcome)
         {
-            IEnumerable<SortOperationMetadata> outcome = SortOperationMetadataFinder.Find<Person>(key, direction);
+            IEnumerable<SortOperationMetadata> outcome = SortOperationMetadataFinder.Find<Person>(key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
 
             string[] keyParts = key.Split('.');
             Assert.Equal(keyParts.Length, outcome.Count());
