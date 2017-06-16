@@ -3,11 +3,57 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Collections;
+using System.Diagnostics;
 
-    namespace NetSort.UnitTests
+namespace NetSort.UnitTests
     {
     public class IEnumerableSortingTests
     {
+        [Fact]
+        public void IsPerformanceReasonableForSimpleIntSort()
+        {
+            var people = new List<Person>();
+            for (int index = 0; index < 10000000; index++)
+            {
+                people.Add(new Person() { Age = index % 100 });
+            }
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            var sortedPeople = people.SortByKey("age");
+            sw.Stop();
+            bool isReasonable = sw.ElapsedMilliseconds <= 500;
+
+            Assert.True(isReasonable);
+        }
+
+        [Fact]
+        public void IsPerformanceReasonableForNestedSort()
+        {
+            var people = new List<Person>();
+            for (int index = 0; index < 1000000; index++)
+            {
+                people.Add(new Person() 
+                { 
+                    Age = index % 100, 
+                    NonSortableAddress = new NonSortableAddress() 
+                    { 
+                        Metadata = new AddressMeta () { SomeDecimal = index },
+                    } 
+                });
+            }
+
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            var sortedPeople = people.SortByKey("nonSortAddress.metadata.decimal");
+            sw.Stop();
+            bool isReasonable = sw.ElapsedMilliseconds <= 500;
+
+            Assert.True(isReasonable);
+        }        
+
         [Theory]
         [ClassData(typeof(SortWithStringDirectionTestDataGenerator))]
         public void DoesSortWithStringDirectionWork(IEnumerable<Person> people, string sortKey, string direction,
