@@ -1,19 +1,19 @@
-﻿using System;
-using Xunit;
-using NetSort;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
+﻿    using System;
+    using Xunit;
+    using NetSort;
+    using System.Collections.Generic;
+    using System.Collections;
+    using System.Linq;
 
-namespace NetSort.UnitTests
-{
+    namespace NetSort.UnitTests
+    {
     public class SortOperationMetadataFinderTests
     {
         [Theory]
         [ClassData(typeof(FindMetadataTestDataGenerator))]
         public void SortOperationMetadataFinder_Find(string key, SortDirection? direction, IList<Tuple<string, SortDirection>> expectedOutcome)
         {
-            IEnumerable<SortOperationMetadata> outcome = SortOperationMetadataFinder.Find<Person>(key, direction);
+            IEnumerable<SortOperationMetadata> outcome = SortOperationMetadataFinder.Find<Person>(key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
 
             string[] keyParts = key.Split('.');
             Assert.Equal(keyParts.Length, outcome.Count());
@@ -26,10 +26,10 @@ namespace NetSort.UnitTests
         }
 
         public class FindMetadataTestDataGenerator : IEnumerable<object[]>
-		{
-			private List<object[]> _data = new List<object[]>()
-			{
-				new object[] 
+        {
+            private List<object[]> _data = new List<object[]>()
+            {
+                new object[] 
                 { 
                     "age", 
                     SortDirection.Desc, 
@@ -90,17 +90,17 @@ namespace NetSort.UnitTests
                         new Tuple<string, SortDirection>("Zip", SortDirection.Desc) 
                     } 
                 },
-			};
+            };
 
-			IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
+            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
 
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return _data.GetEnumerator();
-			}
-		}
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return _data.GetEnumerator();
+            }
+        }
     }
-}
+    }
