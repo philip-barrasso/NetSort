@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/philip-barrasso/NetSort</PackageProjectUrl>
     <RepositoryUrl>https://github.com/philip-barrasso/NetSort</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>sort webapi api order</PackageTags>
+    <PackageTags>sort sorting webapi api order</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Copyright>Copyright 2017</Copyright>
     <PackageReleaseNotes>Added support for custom part delimiters when sorting by nested properties</PackageReleaseNotes>
