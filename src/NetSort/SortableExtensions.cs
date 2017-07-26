@@ -64,7 +64,7 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, char delimiter, string direction) where T : class
         {
-            SortDirection directionEnum = ParseDirection(direction);
+            var directionEnum = ParseDirection(direction);
             return SortByKey(items, key, delimiter, directionEnum);
         }
 
@@ -82,10 +82,10 @@ namespace NetSort
 
         private static IOrderedEnumerable<T> DoSort<T>(IEnumerable<T> items, string key, char delimiter, SortDirection? direction) where T : class
         {
-            IEnumerable<SortOperationMetadata> metadata = SortOperationMetadataFinder.Find<T>(key, delimiter, direction);
-            if (metadata.Any() == false)
+            var metadata = SortOperationMetadataFinder.Find<T>(key, delimiter, direction);
+            if (!metadata.Any())
             {
-                string error = $"A 'sortable attribute' could not be found.\n Key: {key} \nType: {typeof(T).Name}.";
+                var error = $"A 'sortable attribute' could not be found.\n Key: {key} \nType: {typeof(T).Name}.";
                 throw new ArgumentOutOfRangeException(nameof(key), error);
             }
 
@@ -95,8 +95,8 @@ namespace NetSort
         private static SortDirection ParseDirection(string val)
         {
             SortDirection parsedDirection;
-            bool wasParseSuccessful = Enum.TryParse(val, true, out parsedDirection);
-            if (wasParseSuccessful == true)
+            var wasParseSuccessful = Enum.TryParse(val, true, out parsedDirection);
+            if (wasParseSuccessful)
             {
                 return parsedDirection;
             }

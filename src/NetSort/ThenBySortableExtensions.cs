@@ -27,7 +27,7 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, char delimiter) where T : class
         {
-            return ThenSortByKey(items, key, delimiter, null as SortDirection?);
+            return DoThenSort(items, key, delimiter, null);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, char delimiter, SortDirection direction) where T : class
         {
-            return ThenSortByKey(items, key, delimiter, direction);
+            return DoThenSort(items, key, delimiter, direction);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, char delimiter, string direction) where T : class
         {
-            SortDirection directionEnum = ParseDirection(direction);
+            var directionEnum = ParseDirection(direction);
             return ThenSortByKey(items, key, delimiter, directionEnum);
         }
 
@@ -81,12 +81,12 @@ namespace NetSort
             return ThenSortByKey(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
         }
 
-        private static IOrderedEnumerable<T> ThenSortByKey<T>(IOrderedEnumerable<T> items, string key, char delimiter, SortDirection? direction) where T : class
+        private static IOrderedEnumerable<T> DoThenSort<T>(IOrderedEnumerable<T> items, string key, char delimiter, SortDirection? direction) where T : class
         {
-            IEnumerable<SortOperationMetadata> metadata = SortOperationMetadataFinder.Find<T>(key, delimiter, direction);
-            if (metadata.Any() == false)
+            var metadata = SortOperationMetadataFinder.Find<T>(key, delimiter, direction);
+            if (!metadata.Any())
             {
-                string error = $"A 'sortable attribute' could not be found.\n Key: {key} \nType: {typeof(T).Name}.";
+                var error = $"A 'sortable attribute' could not be found.\n Key: {key} \nType: {typeof(T).Name}.";
                 throw new ArgumentException(error);
             }
 
