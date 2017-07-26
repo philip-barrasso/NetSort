@@ -26,7 +26,7 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, char delimiter) where T : class
         {
-            return SortByKey(items, key, delimiter, null as SortDirection?);
+            return DoSort(items, key, delimiter, null);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, char delimiter, SortDirection direction) where T : class
         {
-            return SortByKey(items, key, delimiter, direction);
+            return DoSort(items, key, delimiter, direction);
         }
         
         /// <summary>
@@ -80,13 +80,13 @@ namespace NetSort
             return SortByKey(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
         }
 
-        private static IOrderedEnumerable<T> SortByKey<T>(IEnumerable<T> items, string key, char delimiter, SortDirection? direction) where T : class
+        private static IOrderedEnumerable<T> DoSort<T>(IEnumerable<T> items, string key, char delimiter, SortDirection? direction) where T : class
         {
             IEnumerable<SortOperationMetadata> metadata = SortOperationMetadataFinder.Find<T>(key, delimiter, direction);
             if (metadata.Any() == false)
             {
                 string error = $"A 'sortable attribute' could not be found.\n Key: {key} \nType: {typeof(T).Name}.";
-                throw new ArgumentException(error);
+                throw new ArgumentOutOfRangeException(nameof(key), error);
             }
 
             return Sort(items, metadata);
@@ -101,7 +101,7 @@ namespace NetSort
                 return parsedDirection;
             }
 
-            throw new ArgumentException($"{val} is not a valid 'SortDirection'");
+            throw new ArgumentOutOfRangeException("direction", $"{val} is not a valid 'SortDirection'");
         }
 
         private static IOrderedEnumerable<T> Sort<T>(IEnumerable<T> items, IEnumerable<SortOperationMetadata> metadata)
