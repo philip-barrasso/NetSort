@@ -7,7 +7,7 @@ build_script:
 - cmd: >-
     cd src
 
-    dotnet restore
+    nuget restore
 
     dotnet test NetSort.Tests\Netsort.Tests.csproj
     
