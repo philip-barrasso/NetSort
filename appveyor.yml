@@ -9,7 +9,7 @@ build_script:
 
     dotnet restore
 
-    dotnet test NetSort.UnitTests\Netsort.UnitTests.csproj
+    dotnet test NetSort.Tests\Netsort.Tests.csproj
     
     dotnet build -c release
     
