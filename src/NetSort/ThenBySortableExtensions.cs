@@ -7,18 +7,7 @@ namespace NetSort
     public static partial class SortableExtensions
     {
         /// <summary>
-        /// Returns a sorted enumerable per the specified 'key' in the order specified on the 'SortableAttribute' of the key passed in, or the default (Ascending).
-        /// </summary>
-        /// <typeparam name="T">The type of data in the enumerable being sorted</typeparam>
-        /// <param name="items">The data to sort</param>
-        /// <param name="key">The 'key' to sort by. This key must be present as the 'SortKey' of exactly one 'SortableAttribute' on a property of type T</param>
-        public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key) where T : class
-        {
-            return ThenSortByKey(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER);
-        }
-
-        /// <summary>
-        /// Returns a sorted enumerable per the specified 'key' in the order specified on the 'SortableAttribute' of the key passed in, or the default (Ascending).
+        /// Returns an ordered enumerable per the specified 'key' in the order specified on the 'SortableAttribute' of the key passed in, or the default (Ascending).
         /// </summary>
         /// <typeparam name="T">The type of data in the enumerable being sorted</typeparam>
         /// <param name="items">The data to sort</param>
@@ -30,19 +19,7 @@ namespace NetSort
         }
 
         /// <summary>
-        /// Returns a sorted enumerable per the specified 'key' and 'order'.
-        /// </summary>
-        /// <typeparam name="T">The type of data in the enumerable being sorted</typeparam>
-        /// <param name="items">The data to sort</param>
-        /// <param name="key">The 'key' to sort by. This key must be present as the 'SortKey' of exactly one 'SortableAttribute' on a property of type T</param>
-        /// <param name="direction">The direction to sort (Asc | Desc)</param>
-        public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, SortDirection direction) where T : class
-        {
-            return ThenSortByKey(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
-        }
-
-        /// <summary>
-        /// Returns a sorted enumerable per the specified 'key' and 'order'.
+        /// Returns an ordered enumerable per the specified 'key' and 'order'.
         /// </summary>
         /// <typeparam name="T">The type of data in the enumerable being sorted</typeparam>
         /// <param name="items">The data to sort</param>
@@ -55,7 +32,30 @@ namespace NetSort
         }
 
         /// <summary>
-        /// Returns a sorted enumerable per the specified 'key' in the specified 'order'.
+        /// Returns an ordered enumerable per the specified 'key' in the order specified on the 'SortableAttribute' of the key passed in, or the default (Ascending).
+        /// </summary>
+        /// <typeparam name="T">The type of data in the enumerable being sorted</typeparam>
+        /// <param name="items">The data to sort</param>
+        /// <param name="key">The 'key' to sort by. This key must be present as the 'SortKey' of exactly one 'SortableAttribute' on a property of type T</param>
+        public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key) where T : class
+        {
+            return ThenSortByKey(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER);
+        }        
+
+        /// <summary>
+        /// Returns an ordered enumerable per the specified 'key' and 'order'.
+        /// </summary>
+        /// <typeparam name="T">The type of data in the enumerable being sorted</typeparam>
+        /// <param name="items">The data to sort</param>
+        /// <param name="key">The 'key' to sort by. This key must be present as the 'SortKey' of exactly one 'SortableAttribute' on a property of type T</param>
+        /// <param name="direction">The direction to sort (Asc | Desc)</param>
+        public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, SortDirection direction) where T : class
+        {
+            return ThenSortByKey(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
+        }
+        
+        /// <summary>
+        /// Returns an ordered enumerable per the specified 'key' in the specified 'order'.
         /// </summary>
         /// <typeparam name="T">The type of data in the enumerable being sorted</typeparam>
         /// <param name="items">The data to sort</param>
@@ -69,7 +69,7 @@ namespace NetSort
         }
 
         /// <summary>
-        /// Returns a sorted enumerable per the specified 'key' in the specified 'order'.
+        /// Returns an ordered enumerable per the specified 'key' in the specified 'order'.
         /// </summary>
         /// <typeparam name="T">The type of data in the enumerable being sorted</typeparam>
         /// <param name="items">The data to sort</param>
