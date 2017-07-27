@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace NetSort
 {
@@ -90,7 +89,7 @@ namespace NetSort
                 throw new ArgumentException(error);
             }
 
-            return Sort(items, metadata);
+            return ThenSort(items, metadata);
         }
 
         private static IOrderedEnumerable<T> ThenSort<T>(IOrderedEnumerable<T> items, IEnumerable<SortOperationMetadata> metadata)
@@ -99,8 +98,10 @@ namespace NetSort
             {
                 return items.ThenBy(i => GetNestedValue(metadata, i));
             }
-
-            return items.ThenByDescending(i => GetNestedValue(metadata, i));
+            else
+            {
+                return items.ThenByDescending(i => GetNestedValue(metadata, i));
+            }
         }
     }
 }

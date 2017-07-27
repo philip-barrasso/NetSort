@@ -110,8 +110,10 @@ namespace NetSort
             {
                 return items.OrderBy(i => GetNestedValue(metadata, i));
             }
-
-            return items.OrderByDescending(i => GetNestedValue(metadata, i));
+            else
+            {
+                return items.OrderByDescending(i => GetNestedValue(metadata, i));
+            }
         }
 
         private static object GetNestedValue(IEnumerable<SortOperationMetadata> metadatas, object rootObj)

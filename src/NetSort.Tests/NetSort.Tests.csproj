@@ -56,6 +56,7 @@
     <Compile Include="SortableExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortKeyValidatorTests.cs" />
+    <Compile Include="ThenBySortableExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
