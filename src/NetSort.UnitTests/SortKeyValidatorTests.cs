@@ -1,13 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetSort.Tests.Models;
+using NetSort.UnitTests.Models;
 using NetSort.Validation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace NetSort.Tests
+namespace NetSort.UnitTests
 {
     [TestClass]
     public class SortKeyValidatorTests

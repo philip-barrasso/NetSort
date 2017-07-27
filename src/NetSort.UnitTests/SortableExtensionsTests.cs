@@ -1,11 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NetSort.Tests.Models;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetSort.UnitTests.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
-namespace NetSort.Tests
+namespace NetSort.UnitTests
 {
     [TestClass]
     public class SortableExtensionsTests
@@ -98,8 +99,8 @@ namespace NetSort.Tests
                 new Person { Name = "Bob3" },
             };
 
-            var sortedPeople = people.SortByKey("name", "asc").ToList();      
-            
+            var sortedPeople = people.SortByKey("name", "asc").ToList();
+
             var isCorrect = DoesMatch(sortedPeople, people.OrderBy(p => p.Name).ToList(), p => p.Name);
 
             Assert.IsTrue(isCorrect);
