@@ -5,6 +5,8 @@ namespace NetSort.Samples.Api.Models
 {
     public class Address
     {
+        public long Id { get; set; }
+
         [Sortable("state")]
         public string State { get; set; }
 
