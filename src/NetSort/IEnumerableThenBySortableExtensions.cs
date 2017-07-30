@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NetSort.Sorting;
+using System;
 using System.Linq;
 
 namespace NetSort
@@ -15,7 +15,8 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, char delimiter) where T : class
         {
-            return DoThenSort(items, key, delimiter, null);
+            return new IEnumerableThenBySorter<T>()
+                .Sort(items, key, delimiter, null);
         }
 
         /// <summary>
@@ -28,7 +29,8 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, char delimiter, SortDirection direction) where T : class
         {
-            return DoThenSort(items, key, delimiter, direction);
+            return new IEnumerableThenBySorter<T>()
+                .Sort(items, key, delimiter, direction);
         }
 
         /// <summary>
@@ -39,7 +41,8 @@ namespace NetSort
         /// <param name="key">The 'key' to sort by. This key must be present as the 'SortKey' of exactly one 'SortableAttribute' on a property of type T</param>
         public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key) where T : class
         {
-            return ThenSortByKey(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER);
+            return new IEnumerableThenBySorter<T>()
+                .Sort(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, null);
         }        
 
         /// <summary>
@@ -51,7 +54,8 @@ namespace NetSort
         /// <param name="direction">The direction to sort (Asc | Desc)</param>
         public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, SortDirection direction) where T : class
         {
-            return ThenSortByKey(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
+            return new IEnumerableThenBySorter<T>()
+                .Sort(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
         }
         
         /// <summary>
@@ -64,8 +68,8 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, char delimiter, string direction) where T : class
         {
-            var directionEnum = ParseDirection(direction);
-            return ThenSortByKey(items, key, delimiter, directionEnum);
+            return new IEnumerableThenBySorter<T>()
+                .SortWithStringDirection(items, key, delimiter, direction);
         }
 
         /// <summary>
@@ -77,31 +81,8 @@ namespace NetSort
         /// <param name="direction">The direction to sort (Asc | Desc)</param>
         public static IOrderedEnumerable<T> ThenSortByKey<T>(this IOrderedEnumerable<T> items, string key, string direction) where T : class
         {
-            return ThenSortByKey(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
-        }
-
-        private static IOrderedEnumerable<T> DoThenSort<T>(IOrderedEnumerable<T> items, string key, char delimiter, SortDirection? direction) where T : class
-        {
-            var metadata = SortOperationMetadataFinder.Find<T>(key, delimiter, direction);
-            if (!metadata.Any())
-            {
-                var error = $"A 'sortable attribute' could not be found.\n Key: {key} \nType: {typeof(T).Name}.";
-                throw new ArgumentException(error);
-            }
-
-            return ThenSort(items, metadata);
-        }
-
-        private static IOrderedEnumerable<T> ThenSort<T>(IOrderedEnumerable<T> items, IEnumerable<SortOperationMetadata> metadata)
-        {
-            if (metadata.Last().Direction == SortDirection.Asc)
-            {
-                return items.ThenBy(i => GetNestedValue(metadata, i));
-            }
-            else
-            {
-                return items.ThenByDescending(i =>  GetNestedValue(metadata, i));
-            }
+            return new IEnumerableThenBySorter<T>()
+                .SortWithStringDirection(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
         }
     }
 }

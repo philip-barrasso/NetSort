@@ -8,6 +8,11 @@ namespace NetSort
     {
         public static IEnumerable<SortOperationMetadata> Find<T>(string key, char delimiter, SortDirection? overrideDirection = null) where T : class
         {
+            if (key == null)
+            {
+                return new List<SortOperationMetadata>();
+            }
+
             var metadata = new List<SortOperationMetadata>();
             var keyHierarchy = key.Split(delimiter);
             var curType = typeof(T);

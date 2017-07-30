@@ -42,5 +42,14 @@ namespace NetSort.UnitTests
 
             Assert.IsFalse(isValid);
         }
+
+        [TestMethod]
+        public void SortKeyValidator_IsKeyValid_WithNullKey_ShouldReturnFalse()
+        {
+            var sut = new SortKeyValidator();
+            var isValid = sut.IsKeyValid<Person>(null);
+
+            Assert.IsFalse(isValid);
+        }
     }
 }

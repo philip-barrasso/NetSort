@@ -200,6 +200,34 @@ namespace NetSort.UnitTests
             var sortedPeople = people.SortByKey("name", "someDirectionThatDoesntExist").ToList();
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void SortableExtensions_SortByKey_WithNullKey_ShouldThrowsArgumentOutOfRangeException()
+        {
+            var people = new List<Person>
+            {
+                new Person { NameWithDefaultDescending = "Bob" },
+                new Person { NameWithDefaultDescending = "AZan" },
+                new Person { NameWithDefaultDescending = "Tom" },
+                new Person { NameWithDefaultDescending = "Bob3" },
+            };
+
+            var sortedPeople = people.SortByKey(null).ToList();
+
+            var isCorrect = DoesMatch(sortedPeople, people.ToList(), p => p.NameWithDefaultDescending);
+
+            Assert.IsTrue(isCorrect);
+        }
+
+        [TestMethod]        
+        public void SortableExtensions_SortByKey_WithNullData_Works()
+        {
+            List<Person> people = null;
+            var sortedPeople = people.SortByKey("nameDesc");
+
+            Assert.AreEqual(null, sortedPeople);
+        }
+
         private bool DoesMatch<T, TEQuality>(IList<T> data1, IList<T> data2, Func<T, TEQuality> equalitySelector)
         {
             if (data1.Count != data2.Count) return false;
