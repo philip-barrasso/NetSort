@@ -228,6 +228,24 @@ namespace NetSort.UnitTests
             Assert.AreEqual(null, sortedPeople);
         }
 
+        [TestMethod]
+        public void SortableExtensions_SortByKey_WithCustomDelimiter_Works()
+        {
+            var people = new List<Person>
+            {
+                new Person { NonSortableAddress = new NonIComparableAddress { Metadata = new AddressMetadata { SomeDecimal = 5, } } },
+                new Person { NonSortableAddress = new NonIComparableAddress { Metadata = new AddressMetadata { SomeDecimal = 8, } } },
+                new Person { NonSortableAddress = new NonIComparableAddress { Metadata = new AddressMetadata { SomeDecimal = 4, } } },
+                new Person { NonSortableAddress = new NonIComparableAddress { Metadata = new AddressMetadata { SomeDecimal = 2, } } },
+            };
+
+            var sortedPeople = people.SortByKey("nonSortAddress_metadata_decimal", '_').ToList();
+
+            var isCorrect = DoesMatch(sortedPeople, people.OrderBy(p => p.NonSortableAddress.Metadata.SomeDecimal).ToList(), p => p.NonSortableAddress.Metadata.SomeDecimal);
+
+            Assert.IsTrue(isCorrect);
+        }
+
         private bool DoesMatch<T, TEQuality>(IList<T> data1, IList<T> data2, Func<T, TEQuality> equalitySelector)
         {
             if (data1.Count != data2.Count) return false;
