@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetSort.UnitTests.Models
+﻿namespace NetSort.UnitTests.Models
 {
     public class AddressMetadata
     {

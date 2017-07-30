@@ -1,9 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetSort.UnitTests.Models;
 using NetSort.Validation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NetSort.UnitTests
 {

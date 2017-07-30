@@ -1,5 +1,5 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
+
 namespace NetSort
 {
     internal class SortOperationMetadata
