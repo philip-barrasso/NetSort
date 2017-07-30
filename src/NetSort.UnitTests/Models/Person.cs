@@ -1,5 +1,6 @@
 ﻿using System;
-namespace NetSort.UnitTests
+
+namespace NetSort.UnitTests.Models
 {
     public class Person
     {
@@ -19,7 +20,7 @@ namespace NetSort.UnitTests
         public Address Address { get; set; }
 
         [Sortable("nonSortAddress")]
-        public NonSortableAddress NonSortableAddress { get; set; }
+        public NonIComparableAddress NonSortableAddress { get; set; }
 
         [Sortable("joinDate", SortDirection.Desc)]
         public DateTime DateJoined { get; set; }

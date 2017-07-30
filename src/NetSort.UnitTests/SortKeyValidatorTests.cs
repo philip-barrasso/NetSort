@@ -1,73 +1,46 @@
-﻿    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using Xunit;
-    using NetSort.Validation;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NetSort.UnitTests.Models;
+using NetSort.Validation;
 
-    namespace NetSort.UnitTests
-    {
+namespace NetSort.UnitTests
+{
+    [TestClass]
     public class SortKeyValidatorTests
     {
-        [Theory]
-        [ClassData(typeof(ValidateKeyTestDataGenerator))]
-        public void DoesSortKeyValidatorWork(string key, bool expectedOutput)
+        [TestMethod]
+        public void SortKeyValidator_IsKeyValid_WithKeyFound_ShouldReturnTrue()
         {
             var sut = new SortKeyValidator();
-            bool isValid = sut.IsKeyValid<Person>(key);
+            var isValid = sut.IsKeyValid<Person>("name");
 
-            Assert.Equal(expectedOutput, isValid);
+            Assert.IsTrue(isValid);
         }
 
-        [Theory]
-        [ClassData(typeof(ValidateKeyWithCustomDelimiterTestDataGenerator))]
-        public void DoesSortKeyValidatorWithCustomDelimiterWork(string key, char delimiter, bool expectedOutput)
+        [TestMethod]
+        public void SortKeyValidator_IsKeyValid_WithKeyNotFound_ShouldReturnFalse()
         {
             var sut = new SortKeyValidator();
-            bool isValid = sut.IsKeyValid<Person>(key, delimiter);
+            var isValid = sut.IsKeyValid<Person>("someKeyThatDoesntExist");
 
-            Assert.Equal(expectedOutput, isValid);
+            Assert.IsFalse(isValid);
         }
 
-        public class ValidateKeyTestDataGenerator : IEnumerable<object[]>
+        [TestMethod]
+        public void SortKeyValidator_IsKeyValid_WithKeyForIComparableComplexObject_ShouldReturnTrue()
         {
-            private List<object[]> _data = new List<object[]>()
-            {
-                new object[] { "some key that does not exist", false },
-                new object[] { "age", true },
-                new object[] { "complexAddress", true },
-                new object[] { "nonSortAddress", false },
-                new object[] { "nonSortAddress.zip", true },
-                new object[] { "nonSortAddress.metadata", false }
-            };
+            var sut = new SortKeyValidator();
+            var isValid = sut.IsKeyValid<Person>("complexAddress");
 
-            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
-            {
-                return _data.GetEnumerator();
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return _data.GetEnumerator();
-            }
+            Assert.IsTrue(isValid);
         }
 
-        public class ValidateKeyWithCustomDelimiterTestDataGenerator : IEnumerable<object[]>
+        [TestMethod]
+        public void SortKeyValidator_IsKeyValid_WithKeyForNonIComparableComplexObject_ShouldReturnFalse()
         {
-            private List<object[]> _data = new List<object[]>()
-            {
-                new object[] { "nonSortAddress_zip", '_', true },
-                new object[] { "nonSortAddress.zip", '.', true },
-            };
+            var sut = new SortKeyValidator();
+            var isValid = sut.IsKeyValid<Person>("address");
 
-            IEnumerator<object[]> IEnumerable<object[]>.GetEnumerator()
-            {
-                return _data.GetEnumerator();
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return _data.GetEnumerator();
-            }
+            Assert.IsFalse(isValid);
         }
     }
-    }
+}

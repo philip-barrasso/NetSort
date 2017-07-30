@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetSort.UnitTests
+namespace NetSort.UnitTests.Models
 {
     public class Address : IComparable
     {
@@ -31,7 +31,7 @@ namespace NetSort.UnitTests
         }
 
         public override bool Equals(object obj)
-        {			
+        {
             return CompareTo(obj) == 0;
         }
     }

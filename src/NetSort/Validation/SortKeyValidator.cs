@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace NetSort.Validation
 {
@@ -24,8 +22,8 @@ namespace NetSort.Validation
         /// <param name="delimiter">The char used to separate nested properties</param>
         public bool IsKeyValid<T>(string key, char delimiter) where T : class
         {
-            int expectedMetadatasCount = key.Split(delimiter).Length;
-            IEnumerable<SortOperationMetadata> metadatas = SortOperationMetadataFinder.Find<T>(key, delimiter);
+            var expectedMetadatasCount = key.Split(delimiter).Length;
+            var metadatas = SortOperationMetadataFinder.Find<T>(key, delimiter);
 
             return metadatas.Count() == expectedMetadatasCount;
         }

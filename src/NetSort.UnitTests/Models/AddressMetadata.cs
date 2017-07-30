@@ -1,8 +1,6 @@
-using System;
-
-namespace NetSort.UnitTests
+﻿namespace NetSort.UnitTests.Models
 {
-    public class AddressMeta
+    public class AddressMetadata
     {
         public string SomeField { get; set; }
 

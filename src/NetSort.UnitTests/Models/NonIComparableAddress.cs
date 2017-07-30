@@ -1,11 +1,9 @@
-using System;
-
-namespace NetSort.UnitTests
+﻿namespace NetSort.UnitTests.Models
 {
-    public class NonSortableAddress
+    public class NonIComparableAddress
     {
         [Sortable("metadata")]
-        public AddressMeta Metadata { get; set; }
+        public AddressMetadata Metadata { get; set; }
 
         public string Street { get; set; }
 

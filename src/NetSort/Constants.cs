@@ -1,5 +1,4 @@
-﻿using System;
-namespace NetSort
+﻿namespace NetSort
 {
     internal class Constants
     {

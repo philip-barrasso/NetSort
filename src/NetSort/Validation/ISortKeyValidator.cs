@@ -1,5 +1,4 @@
-﻿using System;
-namespace NetSort.Validation
+﻿namespace NetSort.Validation
 {
     public interface ISortKeyValidator
     {
