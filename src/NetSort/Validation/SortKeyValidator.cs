@@ -22,6 +22,11 @@ namespace NetSort.Validation
         /// <param name="delimiter">The char used to separate nested properties</param>
         public bool IsKeyValid<T>(string key, char delimiter) where T : class
         {
+            if (key == null)
+            {
+                return false;
+            }
+
             var expectedMetadatasCount = key.Split(delimiter).Length;
             var metadatas = SortOperationMetadataFinder.Find<T>(key, delimiter);
 
