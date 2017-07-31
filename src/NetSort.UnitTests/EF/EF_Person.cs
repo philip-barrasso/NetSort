@@ -4,5 +4,8 @@
     {
         [Sortable("age")]
         public int Age { get; set; }
+
+        [Sortable("score")]
+        public EF_Score Score { get; set; }
     }
 }
