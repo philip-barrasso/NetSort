@@ -1,5 +1,4 @@
 ﻿using NetSort.Sorting;
-using System;
 using System.Linq;
 
 namespace NetSort

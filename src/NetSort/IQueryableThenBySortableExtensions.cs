@@ -1,6 +1,4 @@
 ﻿using NetSort.Sorting;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NetSort
@@ -16,7 +14,8 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedQueryable<T> ThenSortByKey<T>(this IOrderedQueryable<T> items, string key, char delimiter) where T : class
         {
-            return new IQueryableThenBySorter<T>().Sort(items, key, delimiter, null);
+            return new IQueryableThenBySorter<T>()
+                .Sort(items, key, delimiter, null);
         }
 
         /// <summary>

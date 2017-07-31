@@ -1,5 +1,4 @@
 ﻿using NetSort.Sorting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +15,8 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, char delimiter) where T : class
         {
-            return new IEnumerableSorter<T>().Sort(items, key, delimiter, null);
+            return new IEnumerableSorter<T>()
+                .Sort(items, key, delimiter, null);
         }
 
         /// <summary>
@@ -29,7 +29,8 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, char delimiter, SortDirection direction) where T : class
         {
-            return new IEnumerableSorter<T>().Sort(items, key, delimiter, direction);
+            return new IEnumerableSorter<T>()
+                .Sort(items, key, delimiter, direction);
         }
 
         /// <summary>
@@ -40,7 +41,8 @@ namespace NetSort
         /// <param name="key">The 'key' to sort by. This key must be present as the 'SortKey' of exactly one 'SortableAttribute' on a property of type T</param>
         public static IOrderedEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key) where T : class
         {
-            return new IEnumerableSorter<T>().Sort(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, null);
+            return new IEnumerableSorter<T>()
+                .Sort(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, null);
         }
         
         /// <summary>
@@ -52,7 +54,8 @@ namespace NetSort
         /// <param name="direction">The direction to sort (Asc | Desc)</param>
         public static IOrderedEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, SortDirection direction) where T : class
         {
-            return new IEnumerableSorter<T>().Sort(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
+            return new IEnumerableSorter<T>()
+                .Sort(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
         }
                 
         /// <summary>
@@ -65,7 +68,8 @@ namespace NetSort
         /// <param name="delimiter">The char used to separate nested properties</param>
         public static IOrderedEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, char delimiter, string direction) where T : class
         {
-            return new IEnumerableSorter<T>().SortWithStringDirection(items, key, delimiter, direction);            
+            return new IEnumerableSorter<T>()
+                .SortWithStringDirection(items, key, delimiter, direction);            
         }
 
         /// <summary>
@@ -77,7 +81,8 @@ namespace NetSort
         /// <param name="direction">The direction to sort (Asc | Desc)</param>
         public static IOrderedEnumerable<T> SortByKey<T>(this IEnumerable<T> items, string key, string direction) where T : class
         {
-            return new IEnumerableSorter<T>().SortWithStringDirection(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
+            return new IEnumerableSorter<T>()
+                .SortWithStringDirection(items, key, Constants.DEFAULT_NESTED_PROP_DELIMITER, direction);
         }     
     }
 }

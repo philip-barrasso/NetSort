@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace NetSort.Sorting
 {
@@ -20,12 +19,17 @@ namespace NetSort.Sorting
             {
                 body = Expression.PropertyOrField(body, part.ToSortBy.Name);
             }
-
+                    
+            var orderExpression = Expression.Lambda(body, parameter);
             var propType = metadata.Last().ToSortBy.PropertyType;
 
-            var orderExpression = Expression.Lambda(body, parameter);
+            var expression = Expression.Call(
+                typeof(Queryable), 
+                methodName, 
+                new Type[] { typeof(TType), propType }, 
+                items.Expression, 
+                Expression.Quote(orderExpression));
 
-            var expression = Expression.Call(typeof(Queryable), methodName, new Type[] { typeof(TType), propType }, items.Expression, Expression.Quote(orderExpression));
             return (TOut)items.Provider.CreateQuery<TType>(expression);
         }
     }

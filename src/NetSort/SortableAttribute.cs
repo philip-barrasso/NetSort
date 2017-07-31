@@ -3,7 +3,7 @@
 namespace NetSort
 {
     /// <summary>
-    /// An attribute that's used to decorate properties in classes that should be sortable. IEnumerable.SortByKey will throw an exception if the 'key' passed in as a parameter does not correspond with a 'SortableAttribute'
+    /// An attribute used to decorate properties in classes that should be sortable. SortByKey/ThenSortByKey will throw an exception if the 'key' passed in as a parameter does not correspond with a 'SortableAttribute'
     ///</summary>
     public class SortableAttribute : Attribute
     {

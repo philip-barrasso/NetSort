@@ -4,7 +4,7 @@
     <TargetFramework>netstandard1.4</TargetFramework>    
     <Authors>Philip Barrasso</Authors>
     <PackageId>NetSort</PackageId>
-    <PackageVersion>2.0.2-alpha</PackageVersion>
+    <PackageVersion>2.0.2</PackageVersion>
     <Description>This library's purpose is to sort objects by using 'keys' on properties. It was created to solve a pain point in sorting via web api endpoints</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>  
     <PackageProjectUrl>https://github.com/philip-barrasso/NetSort</PackageProjectUrl>
@@ -13,7 +13,7 @@
     <PackageTags>sort sorting webapi api order</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Copyright>Copyright 2017</Copyright>
-    <PackageReleaseNotes>Fix Entity Framework Compatibility</PackageReleaseNotes>
+    <PackageReleaseNotes>Support for "ThenBy" sorting chains, IQueryable/EntityFramework</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
